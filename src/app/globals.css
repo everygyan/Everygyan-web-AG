@@ -1,60 +1,51 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    /* Luxury Editorial & Earthy Elegance Palette */
-    --background: #FDFBF7; /* Warm linen/sand */
-    --surface: #FFFFFF;
-    --surface-muted: #F5EFEB; /* Soft warm ecru */
-    --surface-border: #E8DFD5;
-    
-    --foreground: #1A1F1E; /* Deep forest slate */
-    --foreground-muted: #6B726F;
-    
-    --terracotta: #C86446; /* Warm baked terracotta */
-    --terracotta-hover: #B25235;
-    --terracotta-soft: rgba(200, 100, 70, 0.12);
-    
-    --olive: #2E4038; /* Sophisticated deep pine/olive */
-    --amber-gold: #D4A373; /* Subtle desert gold */
-  }
-
-  .dark {
-    --background: #0E1211; /* Deep obsidian forest slate */
-    --surface: #151B19;
-    --surface-muted: #1C2422;
-    --surface-border: #283330;
-    
-    --foreground: #F2EFE9;
-    --foreground-muted: #95A39E;
-    
-    --terracotta: #E07858;
-    --terracotta-hover: #F08D6F;
-    --terracotta-soft: rgba(224, 120, 88, 0.16);
-    
-    --olive: #3D534A;
-    --amber-gold: #E5B887;
-  }
+:root {
+  /* Luxury Editorial & Earthy Elegance Palette */
+  --background: #FDFBF7;
+  --surface: #FFFFFF;
+  --surface-muted: #F5EFEB;
+  --surface-border: #E8DFD5;
+  
+  --foreground: #1A1F1E;
+  --foreground-muted: #6B726F;
+  
+  --terracotta: #C86446;
+  --terracotta-hover: #B25235;
+  --terracotta-soft: rgba(200, 100, 70, 0.12);
+  
+  --olive: #2E4038;
+  --amber-gold: #D4A373;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-serif: var(--font-newsreader), "Playfair Display", Georgia, serif;
-  --font-sans: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+.dark {
+  --background: #0E1211;
+  --surface: #151B19;
+  --surface-muted: #1C2422;
+  --surface-border: #283330;
+  
+  --foreground: #F2EFE9;
+  --foreground-muted: #95A39E;
+  
+  --terracotta: #E07858;
+  --terracotta-hover: #F08D6F;
+  --terracotta-soft: rgba(224, 120, 88, 0.16);
+  
+  --olive: #3D534A;
+  --amber-gold: #E5B887;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Luxury micro-interactions & typography */
-h1, h2, h3, .font-editorial {
-  font-family: var(--font-serif);
+/* Luxury typography pairing */
+h1, h2, h3, .font-serif, .font-editorial {
+  font-family: var(--font-newsreader), "Playfair Display", Georgia, serif;
   letter-spacing: -0.025em;
 }
 
