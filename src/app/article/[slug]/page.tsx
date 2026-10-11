@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { getArticleBySlug, getPublishedArticles } from "@/lib/supabase/api";
 import { ReadingControls } from "@/components/articles/reading-controls";
+import { CommentSection } from "@/components/articles/comment-section";
 import { notFound } from "next/navigation";
 import {
   Calendar,
@@ -161,44 +162,8 @@ export default async function ArticleDetailPage({
             </div>
           </div>
 
-          {/* Comments Discussion Feed */}
-          <div className="mt-12 rounded-3xl border border-[#E8DFD5] bg-[#FFFFFF] p-6 sm:p-8 dark:border-[#283330] dark:bg-[#151B19]">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5 text-[#C86446]" />
-                <h3 className="font-serif text-xl font-bold text-[#1A1F1E] dark:text-[#F2EFE9]">
-                  Community Discussion
-                </h3>
-              </div>
-              <span className="text-xs text-[#6B726F]">EveryGyan Community</span>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-2xl bg-[#F5EFEB] p-4 dark:bg-[#1C2422] border border-[#E8DFD5]/60 dark:border-[#283330]">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#1A1F1E] dark:text-[#F2EFE9]">
-                    Sarah Jenkins
-                  </span>
-                  <span className="text-[11px] text-[#6B726F]">2 days ago</span>
-                </div>
-                <p className="mt-2 text-xs sm:text-sm text-[#1A1F1E]/80 dark:text-[#F2EFE9]/80">
-                  Did this exact traverse two seasons ago! Make sure to pack trekking poles; the scree descent after the col is no joke on the knees.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 border-t border-[#E8DFD5] pt-4 dark:border-[#283330] flex items-center justify-between">
-              <p className="text-xs text-[#6B726F]">
-                Sign in to join the conversation and save this route.
-              </p>
-              <Link
-                href="/auth/login"
-                className="rounded-full bg-[#C86446] px-4 py-1.5 text-xs font-semibold text-white hover:bg-[#B25235] transition-colors"
-              >
-                Sign In to Comment
-              </Link>
-            </div>
-          </div>
+          {/* Live Supabase Comments Feed */}
+          <CommentSection articleId={article.id} />
         </div>
 
         {/* Sidebar */}
