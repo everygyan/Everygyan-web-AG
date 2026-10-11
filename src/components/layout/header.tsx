@@ -5,7 +5,6 @@ import Link from "next/link";
 import { MenuItem } from "@/types";
 import { useTheme } from "@/components/theme-provider";
 import {
-  Compass,
   Search,
   Bookmark,
   Sun,
@@ -15,7 +14,7 @@ import {
   ChevronDown,
   ChevronRight,
   Shield,
-  ArrowUpRight,
+  Sparkles,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -29,31 +28,35 @@ export function Header({ menus }: HeaderProps) {
   const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#E8DFD5] bg-[#FDFBF7]/90 backdrop-blur-md dark:border-[#283330] dark:bg-[#0E1211]/90 transition-colors">
+    <header className="sticky top-0 z-50 w-full border-b border-[#E8DFD5] bg-[#FDFBF7]/95 backdrop-blur-md dark:border-[#283330] dark:bg-[#0E1211]/95 transition-colors">
       {/* Top Editorial Ribbon */}
       <div className="border-b border-[#E8DFD5]/60 bg-[#F5EFEB] dark:border-[#283330]/60 dark:bg-[#151B19] py-1.5 px-4 text-center text-[11px] uppercase tracking-widest text-[#6B726F] dark:text-[#95A39E]">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
-          <span className="hidden sm:inline">Dispatch No. 42 • Global Field Expeditions</span>
-          <span className="mx-auto sm:mx-0 font-medium text-[#C86446] dark:text-[#E07858]">
-            Autumn Field Reports Now Live
+          <span className="hidden sm:inline">EveryGyan Dispatches • Global Field Journal</span>
+          <span className="mx-auto sm:mx-0 font-medium text-[#C86446] dark:text-[#E07858] flex items-center gap-1.5">
+            <Sparkles className="h-3 w-3" /> Latest Field Expeditions & Guides
           </span>
-          <span className="hidden md:inline">Curated for Thoughtful Explorers</span>
+          <span className="hidden md:inline">Knowledge for Curious Explorers</span>
         </div>
       </div>
 
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo with Editorial Serif Aesthetic */}
-        <div className="flex items-center gap-10">
+        {/* Brand Logo with Custom EveryGyan Emblem */}
+        <div className="flex items-center gap-8 lg:gap-10">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A1F1E] text-[#FDFBF7] dark:bg-[#F2EFE9] dark:text-[#0E1211] shadow-sm group-hover:scale-105 transition-transform">
-              <Compass className="h-5 w-5 stroke-[1.8]" />
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#1A1F1E] dark:bg-[#F2EFE9] shadow-sm group-hover:scale-105 transition-transform p-1">
+              <img
+                src="/everygyan-logo.svg"
+                alt="EveryGyan Logo"
+                className="h-full w-full object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-2xl font-bold tracking-tight text-[#1A1F1E] dark:text-[#F2EFE9]">
-                WANDER<span className="italic font-light text-[#C86446] dark:text-[#E07858]">LUST</span>
+                Every<span className="font-light italic text-[#C86446] dark:text-[#E07858]">Gyan</span>
               </span>
-              <span className="text-[9px] uppercase tracking-[0.22em] text-[#6B726F] dark:text-[#95A39E] font-medium -mt-1">
-                The Travel Journal
+              <span className="text-[9px] uppercase tracking-[0.24em] text-[#6B726F] dark:text-[#95A39E] font-medium -mt-1">
+                Travel & Knowledge
               </span>
             </div>
           </Link>
@@ -72,13 +75,13 @@ export function Header({ menus }: HeaderProps) {
                   className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-[#1A1F1E]/80 hover:text-[#C86446] dark:text-[#F2EFE9]/80 dark:hover:text-[#E07858] transition-colors rounded-lg"
                 >
                   {item.title}
-                  {item.children && (
+                  {item.children && item.children.length > 0 && (
                     <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:rotate-180" />
                   )}
                 </Link>
 
                 {/* Level 1 Luxury Dropdown */}
-                {item.children && activeDropdown === item.id && (
+                {item.children && item.children.length > 0 && activeDropdown === item.id && (
                   <div className="absolute left-0 top-full pt-2 w-64 animate-in fade-in slide-in-from-top-1 duration-150">
                     <div className="rounded-2xl border border-[#E8DFD5] bg-[#FFFFFF] p-2 shadow-xl dark:border-[#283330] dark:bg-[#151B19]">
                       {item.children.map((subItem) => (
@@ -88,13 +91,13 @@ export function Header({ menus }: HeaderProps) {
                             className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium text-[#1A1F1E] hover:bg-[#F5EFEB] hover:text-[#C86446] dark:text-[#F2EFE9] dark:hover:bg-[#1C2422] dark:hover:text-[#E07858] transition-colors"
                           >
                             <span>{subItem.title}</span>
-                            {subItem.children && (
+                            {subItem.children && subItem.children.length > 0 && (
                               <ChevronRight className="h-3.5 w-3.5 text-[#6B726F]" />
                             )}
                           </Link>
 
                           {/* Level 2 Submenu */}
-                          {subItem.children && (
+                          {subItem.children && subItem.children.length > 0 && (
                             <div className="hidden group-hover/sub:block absolute left-full top-0 pl-2 w-60">
                               <div className="rounded-2xl border border-[#E8DFD5] bg-[#FFFFFF] p-2 shadow-xl dark:border-[#283330] dark:bg-[#151B19]">
                                 {subItem.children.map((leaf) => (
@@ -119,7 +122,7 @@ export function Header({ menus }: HeaderProps) {
           </nav>
         </div>
 
-        {/* Right Action Icons: Search, Dark Mode, Bookmarks, Login & Admin Link */}
+        {/* Right Action Icons */}
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/search"
@@ -189,7 +192,7 @@ export function Header({ menus }: HeaderProps) {
                   >
                     {item.title}
                   </Link>
-                  {item.children && (
+                  {item.children && item.children.length > 0 && (
                     <button
                       onClick={() =>
                         setExpandedMobileItem(
@@ -207,7 +210,7 @@ export function Header({ menus }: HeaderProps) {
                   )}
                 </div>
 
-                {item.children && expandedMobileItem === item.id && (
+                {item.children && item.children.length > 0 && expandedMobileItem === item.id && (
                   <div className="pl-3 pt-2 space-y-2">
                     {item.children.map((sub) => (
                       <div key={sub.id}>
@@ -218,7 +221,7 @@ export function Header({ menus }: HeaderProps) {
                         >
                           {sub.title}
                         </Link>
-                        {sub.children && (
+                        {sub.children && sub.children.length > 0 && (
                           <div className="pl-2 py-1 space-y-1">
                             {sub.children.map((leaf) => (
                               <Link

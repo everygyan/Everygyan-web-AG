@@ -1,15 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { FEATURED_ARTICLES } from "@/data/mock-data";
 import { BentoHero } from "@/components/home/bento-hero";
 import { ArticleCard } from "@/components/articles/article-card";
 import { DestinationGrid } from "@/components/destinations/destination-grid";
 import { TrendingBar } from "@/components/articles/trending-bar";
 import { Newsletter } from "@/components/newsletter/newsletter";
-import { Compass, Sparkles, Flame, ArrowUpRight } from "lucide-react";
+import { getPublishedArticles } from "@/lib/supabase/api";
+import { Sparkles } from "lucide-react";
 
-export default function HomePage() {
-  const editorialArchive = FEATURED_ARTICLES.slice(2);
+export default async function HomePage() {
+  const articles = await getPublishedArticles();
+  const editorialArchive = articles.slice(2);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -17,7 +18,7 @@ export default function HomePage() {
       <div className="mb-10 text-center max-w-3xl mx-auto border-b border-[#E8DFD5] pb-8 dark:border-[#283330]">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-[#C86446]/10 px-4 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#C86446] dark:text-[#E07858] mb-3">
           <Sparkles className="h-3 w-3" />
-          The Autumn 2026 Collection
+          The EveryGyan Collection
         </div>
         <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[#1A1F1E] dark:text-[#F2EFE9] leading-[1.1]">
           Chronicles of the Untamed & Curious

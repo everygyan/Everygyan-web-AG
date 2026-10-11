@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Compass, Mail, Heart, Globe, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe } from "lucide-react";
 
 export function Footer() {
   const [year, setYear] = React.useState("2026");
@@ -18,15 +18,19 @@ export function Footer() {
           {/* Brand & Mission Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A1F1E] text-[#FDFBF7] dark:bg-[#F2EFE9] dark:text-[#0E1211] shadow-sm">
-                <Compass className="h-5 w-5 stroke-[1.8]" />
+              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#1A1F1E] dark:bg-[#F2EFE9] shadow-sm p-1">
+                <img
+                  src="/everygyan-logo.svg"
+                  alt="EveryGyan Logo"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <span className="font-serif text-2xl font-bold tracking-tight text-[#1A1F1E] dark:text-[#F2EFE9]">
-                WANDER<span className="italic font-light text-[#C86446] dark:text-[#E07858]">LUST</span>
+                Every<span className="italic font-light text-[#C86446] dark:text-[#E07858]">Gyan</span>
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-[#6B726F] dark:text-[#95A39E]">
-              An independent journal documenting rare landscapes, thoughtful cultural preservation, and practical frameworks for modern wanderers.
+              An independent publishing platform dedicated to high-altitude mountaineering, slow cultural journeys, visual journalism, and practical knowledge frameworks.
             </p>
             <div className="mt-6 flex items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5 text-[#C86446] dark:text-[#E07858] font-medium">
@@ -34,7 +38,7 @@ export function Footer() {
                 Worldwide Editions
               </span>
               <span>•</span>
-              <span>ISSN 2984-9011</span>
+              <span>Curated by Explorers</span>
             </div>
           </div>
 
@@ -99,7 +103,7 @@ export function Footer() {
           {/* The Journal */}
           <div>
             <h4 className="font-serif text-xs font-semibold uppercase tracking-widest text-[#1A1F1E] dark:text-[#F2EFE9]">
-              The Journal
+              Publication
             </h4>
             <ul className="mt-4 space-y-2.5 text-xs">
               <li>
@@ -119,7 +123,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/terms" className="hover:text-[#C86446] transition-colors">
-                  Terms of Publication
+                  Terms of Service
                 </Link>
               </li>
             </ul>
@@ -128,9 +132,9 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between border-t border-[#E8DFD5]/80 pt-8 sm:flex-row dark:border-[#283330] text-xs">
-          <p>© {year} WANDERLUST Editorial. Printed digitally with Next.js & Supabase.</p>
+          <p>© {year} EveryGyan Editorial. Powered by Next.js & Supabase.</p>
           <p className="mt-3 sm:mt-0 flex items-center gap-1 text-[#6B726F] dark:text-[#95A39E]">
-            Automated deployment ready for GitHub & Hostinger
+            Synced via GitHub to Hostinger
             <ArrowUpRight className="h-3.5 w-3.5" />
           </p>
         </div>

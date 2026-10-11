@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="egGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1F1E" />
+      <stop offset="100%" stop-color="#2D3A36" />
+    </linearGradient>
+    <linearGradient id="terraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E07858" />
+      <stop offset="100%" stop-color="#C86446" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded badge -->
+  <rect width="512" height="512" rx="128" fill="url(#egGrad)" />
+
+  <!-- Outer subtle circular border -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#D4A373" stroke-width="6" stroke-opacity="0.3" stroke-dasharray="16 12"/>
+
+  <!-- Stylized Geometric 'EG' Monogram & Compass Knowledge Star -->
+  <!-- 'E' Structure -->
+  <path d="M140 160 H250 V200 H190 V236 H240 V276 H190 V312 H250 V352 H140 Z" fill="#FDFBF7" />
+
+  <!-- 'G' Structure in Terracotta -->
+  <path d="M372 195 C350 165 315 155 280 165 C235 178 220 220 220 260 C220 310 250 352 310 352 C355 352 380 320 380 280 H305 V245 H380 C382 285 375 325 348 350 C325 370 290 375 260 365" 
+        fill="none" stroke="url(#terraGrad)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Inner Spark / Knowledge Star in Desert Gold -->
+  <polygon points="370,150 377,168 395,175 377,182 370,200 363,182 345,175 363,168" fill="#D4A373" />
+</svg>

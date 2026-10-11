@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { NAVIGATION_MENU } from "@/data/mock-data";
+import { getNavigationMenus } from "@/lib/supabase/api";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -20,24 +20,33 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "WANDERLUST | High-Altitude Expeditions, Travel Journalism & Knowledge",
+  title: "EveryGyan | Travel Chronicles, Cultural Expeditions & Field Knowledge",
   description:
-    "An independent luxury travel publication dedicated to mountain trails, cultural guides, nomad blueprints, and photography masterclasses.",
+    "An independent publication dedicated to high-altitude mountaineering, slow cultural journeys, visual journalism, and practical frameworks for the curious explorer.",
+  icons: {
+    icon: "/everygyan-logo.svg",
+    apple: "/everygyan-logo.svg",
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const menus = await getNavigationMenus();
+
   return (
     <html
       lang="en"
       className={`${newsreader.variable} ${plusJakarta.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/everygyan-logo.svg" type="image/svg+xml" />
+      </head>
       <body className="min-h-full flex flex-col transition-colors duration-300">
         <ThemeProvider>
-          <Header menus={NAVIGATION_MENU} />
+          <Header menus={menus} />
           <main className="flex-1">{children}</main>
           <Footer />
         </ThemeProvider>
