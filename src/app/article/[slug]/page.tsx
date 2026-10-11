@@ -1,21 +1,22 @@
 import React from "react";
 import Link from "next/link";
-import { FEATURED_ARTICLES } from "@/data/mock-data";
+import { getArticleBySlug, getPublishedArticles } from "@/lib/supabase/api";
+import { ReadingControls } from "@/components/articles/reading-controls";
 import { notFound } from "next/navigation";
 import {
   Calendar,
   Clock,
-  Bookmark,
-  Share2,
   ArrowLeft,
   MapPin,
   Tag,
   MessageSquare,
   Sparkles,
+  Play,
 } from "lucide-react";
 
-export function generateStaticParams() {
-  return FEATURED_ARTICLES.map((article) => ({
+export async function generateStaticParams() {
+  const articles = await getPublishedArticles();
+  return articles.map((article) => ({
     slug: article.slug,
   }));
 }
@@ -26,13 +27,14 @@ export default async function ArticleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = FEATURED_ARTICLES.find((a) => a.slug === slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
-  const related = FEATURED_ARTICLES.filter((a) => a.id !== article.id).slice(0, 2);
+  const allArticles = await getPublishedArticles();
+  const related = allArticles.filter((a) => a.id !== article.id).slice(0, 2);
 
   return (
     <article className="min-h-screen pb-20">
@@ -99,7 +101,7 @@ export default async function ArticleDetailPage({
         </div>
       </div>
 
-      {/* Featured Cover Photography */}
+      {/* Featured Cover Photography / Embedded Video */}
       <div className="mx-auto max-w-5xl px-4 sm:px-6 my-10">
         <div className="relative aspect-[16/9] overflow-hidden rounded-3xl shadow-2xl border border-[#E8DFD5] dark:border-[#283330]">
           <img
@@ -107,9 +109,21 @@ export default async function ArticleDetailPage({
             alt={article.title}
             className="h-full w-full object-cover"
           />
+          {article.videoUrl && (
+            <div className="absolute bottom-4 right-4">
+              <a
+                href={article.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#1A1F1E]/80 backdrop-blur-md px-4 py-2 text-xs font-semibold text-white hover:bg-[#C86446] transition-colors"
+              >
+                <Play className="h-3.5 w-3.5 fill-white" /> Watch Field Footage
+              </a>
+            </div>
+          )}
         </div>
         <p className="mt-3 text-center text-xs text-[#6B726F] dark:text-[#95A39E] italic">
-          High-elevation expedition photography • Recorded in the field at {article.destination?.name || "location"}
+          EveryGyan field photography • Recorded on location
         </p>
       </div>
 
@@ -121,32 +135,13 @@ export default async function ArticleDetailPage({
               <p className="font-semibold text-[#C86446] dark:text-[#E07858] flex items-center gap-1.5 mb-1 uppercase tracking-wider text-[11px]">
                 <Sparkles className="h-3.5 w-3.5" /> Field Editorial Note
               </p>
-              Trail maps and high-elevation conditions were audited for this edition. Always consult local mountain rangers and avalanche bulletins before setting out.
+              Audited by EveryGyan correspondents. Always consult local authorities and regional guides before setting out into the backcountry.
             </div>
 
-            <p className="text-base sm:text-lg leading-relaxed text-[#1A1F1E]/90 dark:text-[#F2EFE9]/90">
-              Few landscapes on Earth stir the soul like these mountain passes. Whether stepping off early morning cogwheel trains or strapping on crampons for a sunrise glacier crossing, the sheer scale of the peaks commands reverence.
-            </p>
-
-            <h2 className="font-serif text-2xl font-bold text-[#1A1F1E] dark:text-[#F2EFE9] pt-4">
-              Packing Smart for Elevation
-            </h2>
-
-            <p className="text-sm sm:text-base leading-relaxed text-[#6B726F] dark:text-[#95A39E]">
-              When hiking above 2,500 meters, mountain weather can shift within minutes. Ensure your pack contains breathable merino wool base layers, a 3-layer weatherproof hardshell, mineral sunscreen, and offline satellite topographical maps.
-            </p>
-
-            <blockquote className="border-l-4 border-[#C86446] pl-5 italic font-serif text-xl my-6 text-[#1A1F1E] dark:text-[#F2EFE9]">
-              "In the mountains, there are only two rules: respect the terrain, and never rush the descent."
-            </blockquote>
-
-            <h2 className="font-serif text-2xl font-bold text-[#1A1F1E] dark:text-[#F2EFE9] pt-4">
-              Hut-to-Hut Circuit Logistics
-            </h2>
-
-            <p className="text-sm sm:text-base leading-relaxed text-[#6B726F] dark:text-[#95A39E]">
-              Alpine huts provide hearty mountain dinners and comfortable dorms overlooking sea-of-clouds sunsets. Booking 2–3 months ahead is essential for peak summer months.
-            </p>
+            {/* Article Body Content */}
+            <div className="whitespace-pre-line text-sm sm:text-base leading-relaxed text-[#1A1F1E]/90 dark:text-[#F2EFE9]/90 font-sans">
+              {article.content}
+            </div>
           </div>
 
           {/* Tags */}
@@ -166,16 +161,16 @@ export default async function ArticleDetailPage({
             </div>
           </div>
 
-          {/* Comments Preview */}
+          {/* Comments Discussion Feed */}
           <div className="mt-12 rounded-3xl border border-[#E8DFD5] bg-[#FFFFFF] p-6 sm:p-8 dark:border-[#283330] dark:bg-[#151B19]">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-5 w-5 text-[#C86446]" />
                 <h3 className="font-serif text-xl font-bold text-[#1A1F1E] dark:text-[#F2EFE9]">
-                  Community Discussion (2)
+                  Community Discussion
                 </h3>
               </div>
-              <span className="text-xs text-[#6B726F]">Moderated</span>
+              <span className="text-xs text-[#6B726F]">EveryGyan Community</span>
             </div>
 
             <div className="space-y-4">
@@ -194,7 +189,7 @@ export default async function ArticleDetailPage({
 
             <div className="mt-6 border-t border-[#E8DFD5] pt-4 dark:border-[#283330] flex items-center justify-between">
               <p className="text-xs text-[#6B726F]">
-                Sign in to participate and bookmark this route.
+                Sign in to join the conversation and save this route.
               </p>
               <Link
                 href="/auth/login"
@@ -208,6 +203,10 @@ export default async function ArticleDetailPage({
 
         {/* Sidebar */}
         <div className="lg:col-span-4 space-y-6">
+          {/* Floating Controls */}
+          <ReadingControls article={article} />
+
+          {/* Author Card */}
           <div className="rounded-3xl border border-[#E8DFD5] bg-[#FFFFFF] p-6 shadow-sm dark:border-[#283330] dark:bg-[#151B19]">
             <h4 className="text-[10px] font-semibold uppercase tracking-widest text-[#C86446] dark:text-[#E07858] mb-3">
               Field Author
@@ -226,10 +225,11 @@ export default async function ArticleDetailPage({
               </div>
             </div>
             <p className="mt-3 text-xs text-[#6B726F] dark:text-[#95A39E] leading-relaxed">
-              {article.author.bio || "Field correspondent documenting mountain ranges and cultural architecture."}
+              {article.author.bio || "Field correspondent documenting mountain ranges and cultural architecture for EveryGyan."}
             </p>
           </div>
 
+          {/* Related Articles */}
           <div className="rounded-3xl border border-[#E8DFD5] bg-[#FFFFFF] p-6 shadow-sm dark:border-[#283330] dark:bg-[#151B19]">
             <h4 className="text-[10px] font-semibold uppercase tracking-widest text-[#C86446] dark:text-[#E07858] mb-4">
               Related Dispatches
